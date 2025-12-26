@@ -7,6 +7,7 @@ import {
   REVIEWS,
   deleteWrapper,
   putWrapper,
+  ASTROLOGERS_PRODUCT
 } from "./util";
 
 
@@ -52,4 +53,13 @@ export const productUpdate = async (data) => {
   const resJSON = await putWrapper(`${PRODUCT}/${data.get("id")}`, data,true);
   const result = await returnOrThrow(resJSON);
   return result;
+};
+
+
+// ---------------- ASTROLOGERS BY PRODUCT ----------------
+export const astrologersByProduct = async (productId) => {
+  const resJSON = await getWrapper(
+    `${ASTROLOGERS_PRODUCT}/?product_id=${productId}`
+  );
+  return await returnOrThrow(resJSON);
 };

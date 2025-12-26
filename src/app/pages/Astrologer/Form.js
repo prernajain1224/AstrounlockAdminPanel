@@ -27,6 +27,18 @@ import { useAppDispatch } from "../../store";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { getImageUrl } from "../../api/util"
 
+
+const LANGUAGE_OPTIONS = [
+  "Hindi",
+  "English",
+  "Gujarati",
+  "Marathi",
+  "Punjabi",
+  "Bengali",
+  "Tamil",
+  "Telugu",
+];
+
 const AstrologerForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -53,7 +65,9 @@ const AstrologerForm = () => {
       setValue("religion", apiData?.data?.religion);
       setValue("display_name", apiData?.data?.display_name);
       setValue("about", apiData?.data?.about);
-      // setImage("avatar", apiData?.data?.avatar);
+      setValue("experience", apiData?.data?.experience);
+      setValue("chat_price_min", apiData?.data?.chat_price_min);
+      setValue("languages", apiData?.data?.languages || []);
       setImage(apiData?.data?.avatar);
 
 
@@ -83,10 +97,16 @@ const AstrologerForm = () => {
     obj.append("religion", getValues().religion);
     obj.append("display_name", getValues().display_name);
     obj.append("about", getValues().about);
-    // obj.append("avatar", image);
-      if (image && typeof image !== "string") {
-    obj.append("avatar", image);
-  }
+    obj.append("chat_price_min", getValues().chat_price_min);
+
+    obj.append("experience", getValues().experience || "");
+    obj.append(
+      "languages",
+      JSON.stringify(getValues().languages || [])
+    );
+    if (image && typeof image !== "string") {
+      obj.append("avatar", image);
+    }
 
 
     await makeRequest(obj);
@@ -274,6 +294,19 @@ const AstrologerForm = () => {
                     </div>
                   </div>
 
+                  
+
+                     <div className="col-sm-12">
+                <label>Chat Price (per minute)</label>
+                <input
+                  {...register("chat_price_min", { required: true })}
+                  type="number"
+                  className="form-control"
+                />
+              </div>
+
+
+
                   <div className="col-sm-12">
                     <div className="form-group">
                       <label className="col-form-label" htmlFor="occassion">
@@ -429,6 +462,44 @@ const AstrologerForm = () => {
                       })}
                     </select>
                     <br />
+                  </div>
+
+
+                    <div className="col-sm-12">
+                    <div className="form-group">
+                      <label className="col-form-label">
+                        Experience
+                      </label>
+                      <input
+                        {...register("experience", { required: true })}
+                        type="text"
+                        placeholder="e.g. 5 years"
+                        className="form-control bg-light border-2 small"
+                      />
+                    </div>
+                  </div>
+
+
+                  <div className="col-sm-12">
+                    <div className="form-group">
+                      <label className="col-form-label">
+                        Languages
+                      </label>
+                      <div className="row">
+                        {LANGUAGE_OPTIONS.map((lang) => (
+                          <div className="col-sm-3" key={lang}>
+                            <label>
+                              <input
+                                type="checkbox"
+                                value={lang}
+                                {...register("languages")}
+                              />{" "}
+                              {lang}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
 
 

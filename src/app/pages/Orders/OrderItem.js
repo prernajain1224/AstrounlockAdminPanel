@@ -45,9 +45,9 @@ const OrderItemDetails = () => {
                                             {item.product_name}
                                         </Link>
                                     ))}
-                                    {detailRow("Astrologer", (
-                                        <Link to={`/astrologer/${item?.user}/view`}>
-                                            {item.astrologer_name}
+                                    {detailRow("User", (
+                                        <Link to={`/user/${item?.user}/view`}>
+                                            {item.user.name}
                                         </Link>
                                     ))}
 

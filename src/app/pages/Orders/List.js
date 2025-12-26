@@ -65,7 +65,17 @@ const OrdersList = () => {
 
   const columns = [
     { name: "ID", selector: (row) => row?.id ?? row?.id, sortable: false },
-    { name: "Customer", selector: (row) => row?.username },
+    
+
+     { name: "Customer",
+    
+           cell: (row) => (
+                  <Link to={`/user/${row.user}/view`}>
+                    { row?.username}
+                  </Link>
+                )
+          
+           },
     {
       name: "Status",
       selector: (row) => row?.status

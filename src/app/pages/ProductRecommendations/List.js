@@ -75,9 +75,27 @@ const List = () => {
 
   const columns = [
     { name: "ID", selector: (row) => row?.id ?? row?.id, sortable: false },
-    { name: "Created_by", selector: (row) => row?.created_by_name },
-    { name: "recommended_to", selector: (row) => row?.recommended_to_name },
-    { name: "Created At", selector: (row) => formatDateTime(row?.created_at) },
+   
+    { name: "Created By", 
+
+       cell: (row) => (
+              <Link to={`/astrologer/${row.created_by}/view`}>
+                { row?.created_by_name}
+              </Link>
+            )
+      
+       },
+    
+    { name: "Remedies To",
+
+       cell: (row) => (
+              <Link to={`/user/${row.recommended_to}/view`}>
+                { row?.recommended_to_name}
+              </Link>
+            )
+      
+       },
+    { name: "Created At", selector: (row) => formatDateTime(row?.created_date) },
 
     {
       name: "Actions",
@@ -120,8 +138,8 @@ const List = () => {
   return (
     <Layout>
       <>
-        <h1 className="h3 mb-2 text-gray-800">Product Recommendations</h1>
-        <p className="mb-4">Showing the list of Product Recommendations</p>
+        <h1 className="h3 mb-2 text-gray-800">Product Remedies</h1>
+        <p className="mb-4">Showing the list of Product Remedies</p>
 
         <div className="card shadow mb-4">
           <div className="card-body">

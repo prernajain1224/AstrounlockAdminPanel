@@ -3,6 +3,8 @@ import useFetch from "../../hooks/useFetch";
 import { productDetails, reviewsDetails, productStatusUpdate } from "../../api/product";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { faqsDetails } from "../../api/faqs";
+import { astrologersByProduct } from "../../api/product";
+
 import Layout from "../Layout";
 import {
   formatDateTime,
@@ -23,9 +25,15 @@ const SessionDetails = () => {
   const { apiData: productData, isLoading: productLoading, error: productError } = useFetch(productDetails, id);
   const { apiData: faqData, isLoading: faqLoading, error: faqError } = useFetch(faqsDetails, id);
   const { apiData: reviews, isLoading: reviewsLoading, error: reviewsError } = useFetch(reviewsDetails, id);
+  const {
+    apiData: astrologerData,
+    isLoading: astrologerLoading,
+    error: astrologerError
+  } = useFetch(astrologersByProduct, id);
 
-  const isLoading = productLoading || faqLoading || reviewsLoading;
-  const hasError = productError || faqError || reviewsError;
+
+  const isLoading = productLoading || faqLoading || reviewsLoading || astrologerLoading;
+  const hasError = productError || faqError || reviewsError || astrologerError;
 
   // Handle status change function
   const handleStatusChange = async (id, status) => {
@@ -119,6 +127,55 @@ const SessionDetails = () => {
                   </table>
                 </div>
               </div>
+            ) : title === "Astrologers" ? (
+              <div className="col-12" style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <div className="table-responsive">
+                  {Array.isArray(value) && value.length > 0 ? (
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Avatar</th>
+                          <th>Name</th>
+                          <th>Languages</th>
+                          <th>Experience</th>
+                          <th>Session Price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {value.map((astro) => (
+                          <tr key={astro.id}>
+                            <td>
+                              <img
+                                src={astro.avatar}
+                                alt={astro.name}
+                                style={{
+                                  width: "50px",
+                                  height: "50px",
+                                  borderRadius: "50%",
+                                  objectFit: "cover",
+                                }}
+                              />
+                            </td>
+                            <td>
+                              <Link to={`/astrologer/${astro.id}/view`}>
+                                {astro.name}
+                              </Link>
+                            </td>
+                            <td>{astro.languages?.join(", ") || "NA"}</td>
+                            <td>{astro.experience || "NA"} yrs</td>
+                            <td>{formatPrice(astro.session_price)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  ) : (
+                    <p>Not Available</p>
+                  )}
+                </div>
+              </div>
+
+
+
             ) : title === "Reviews" ? (
               <div className="col-12" style={{ paddingLeft: 0, paddingRight: 0 }}>
                 <div className="table-responsive">
@@ -227,16 +284,14 @@ const SessionDetails = () => {
                     ))}
                     {detailRow("Session Type", productData?.data?.session_type)}
                     {detailRow("Status", productData?.data?.status)}
-                    {/* {detailRow("Astrologer", (
-                      <Link to={`/astrologer/${productData?.data?.author}/view`}>
-                        {productData?.data?.author_name}
-                      </Link>
-                    ))} */}
+
                     {detailRow("Created At", formatDateTime(productData?.data?.created_date))}
                     {detailRow("Banner", productData?.data?.banner)}
                     {detailRow("Section Viedo", productData?.data?.section_video)}
                     {detailRow("FAQ", faqData?.data)}
                     {detailRow("Reviews", reviews?.data)}
+                    {detailRow("Astrologers", astrologerData?.astrologers)}
+
                   </>
                 ) : (
                   <p>

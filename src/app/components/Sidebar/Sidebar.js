@@ -72,7 +72,7 @@ const Sidebar = ({ activeTab }) => {
           }`}
       >
         <Link to={RoutesList.recommendation} className="nav-link">
-          <span style={{ paddingTop: 10 }}> Product Recommendation</span>
+          <span style={{ paddingTop: 10 }}> Product Remedies</span>
         </Link>
       </li>
 

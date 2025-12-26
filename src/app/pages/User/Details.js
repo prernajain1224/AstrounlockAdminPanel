@@ -12,6 +12,9 @@ import {
   adminUserDetails,
 } from "../../api/adminUsers";
 import {
+adminUserAddresses
+} from "../../api/users";
+import {
   wishlistDetails
 } from "../../api/carts";
 import { getImageUrl } from "../../api/util"
@@ -28,6 +31,9 @@ const UserDetails = () => {
   const { apiData: wishlist, isLoading: isWishlistLoading, error: wishlistError } = useFetch(wishlistDetails, id);
   const { apiData: chatData, isLoading: chatLoading, error: chatError } = useFetch(chatsDetails, id);
   const { apiData: recommendations, isLoading: isRecommendationsLoading, error: recommendationsError } = useFetch(userProductRecommendations, id);
+  const { apiData: addresses, isLoading: addressLoading, error: addressError } = 
+    useFetch((id) => adminUserAddresses(id), id);
+
 
 
   const isLoading =
@@ -95,6 +101,51 @@ const UserDetails = () => {
                 </div>
               </div>
 
+            ) : title === "User Addresses" ? (
+    <div className="col-12" style={{ paddingLeft: 0, paddingRight: 0 }}>
+        <div className="table-responsive">
+            <table className="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Phone</th>
+                        <th>House No</th>
+                        <th>Area</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Pincode</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {Array.isArray(value) && value.length > 0 ? (
+                        value.map((item) => (
+                            <tr key={item.id}>
+                                <td>{item.id}</td>
+                                <td>{item.full_name}</td>
+                                <td>{item.phone}</td>
+                                <td>{item.house_no}</td>
+                                <td>{item.area}</td>
+                                <td>{item.city}</td>
+                                <td>{item.state}</td>
+                                <td>{item.pincode}</td>
+                                <td>{item.country}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="9" className="text-muted text-center">
+                                No addresses found.
+                            </td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 
             ) : title === "Chat History" ? (
               <div className="col-12" style={{ paddingLeft: 0, paddingRight: 0 }}>
@@ -127,7 +178,7 @@ const UserDetails = () => {
               </div>
 
 
-             ) :  title === "Product Recommendations" ? (
+             ) :  title === "Product Remedies" ? (
   <div className="col-12" style={{ paddingLeft: 0, paddingRight: 0 }}>
     <div className="table-responsive">
       <table className="table">
@@ -215,7 +266,9 @@ const UserDetails = () => {
                       {detailRow("Created At", formatDateTime(user?.data?.created_at))}
                       {detailRow("Wishlist Items", wishlist?.data?.items)}
                       {detailRow("Chat History", chatData?.data)}
-                       {detailRow("Product Recommendations", recommendations?.data)}
+                      {detailRow("User Addresses", addresses?.addresses)}
+
+                       {detailRow("Product Remedies", recommendations?.data)}
                       <br />
                       <p>Carts : <Link to={`/carts/${user?.data?.id}`}>
                         View Cart Details

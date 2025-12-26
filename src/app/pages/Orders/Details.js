@@ -41,7 +41,7 @@ const OrderDetails = () => {
                         <tr>
                           <th width="20%">Order Item ID</th>
                           <th width="15%">Product Name</th>
-                          <th width="25%">Astrologer</th>
+
                           <th width="15%">Quantity</th>
                           <th width="15%">GST</th>
                           <th width="10%">Price</th>
@@ -56,11 +56,7 @@ const OrderDetails = () => {
                                 {items.product_name}
                               </Link>
                             </td>
-                            <td>
-                              <Link to={`/astrologer/${items.user}/view`}>
-                                {items.astrologer_name}
-                              </Link>
-                            </td>
+
                             <td>{items.quantity}</td>
 
                             <td>{formatPrice(items.gst)}</td>
@@ -76,6 +72,44 @@ const OrderDetails = () => {
                   )}
                 </div>
               </div>
+            ) : title === "Delivery Address" ? (
+              <div className="col-12" style={{ paddingLeft: 0, paddingRight: 0 }}>
+                {value ? (
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Full Name</th>
+                        <th>Phone</th>
+                        <th>House No</th>
+                        <th>Area</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Pincode</th>
+                        <th>Country</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+
+                        <td>{value.id}</td>
+                        <td>{value.full_name}</td>
+                        <td>{value.phone}</td>
+                        <td>{value.house_no}</td>
+                        <td>{value.area}</td>
+                        <td>{value.city}</td>
+                        <td>{value.state}</td>
+                        <td>{value.pincode}</td>
+                        <td>{value.country}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                ) : (
+                  <p>Not Available</p>
+                )}
+              </div>
+
+
             ) : (
               value || "Not Available"
             )
@@ -123,6 +157,7 @@ const OrderDetails = () => {
                     {detailRow("Payment Method", orderData?.data?.payment_method)}
                     {detailRow("Payment Received", orderData?.data?.payment_received ? "Yes" : "No")}
                     {detailRow("Status", orderData?.data?.status)}
+                    {detailRow("Delivery Address", orderData?.data?.delivery_address)}
                     {detailRow("Order Items", orderData?.data?.items)}
                     {detailRow("Payment Status", orderData?.data?.payment_status?.charAt(0).toUpperCase() + orderData?.data?.payment_status?.slice(1))}
                     {detailRow("Wallet Balance Used", formatPrice(orderData?.data?.wallet_balance_used))}

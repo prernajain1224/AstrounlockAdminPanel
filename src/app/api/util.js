@@ -15,6 +15,7 @@ export const LOGIN = BASE + "/login";
 
 // Users
 export const USERS = BASE + "/users";
+export const ADMIN_ADDRESS = BASE + "/admin/user-addresses";
 
 export const FORGOT_PASSWORD = BASE + '/forgot-password';
 export const RESET_PASSWORD = BASE + "/reset-password";
@@ -44,6 +45,9 @@ export const CHATS = BASE + "/chat";
 
 // Roles
 export const ROLES = BASE + "/roles";
+
+// Roles
+export const ASTROLOGERS_PRODUCT = BASE + "/astrologers/by-product";
 
 // Blogs
 export const BLOGS = BASE + "/astrology-blogs";

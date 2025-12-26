@@ -66,7 +66,17 @@ const BlogsList = () => {
   const columns = [
     { name: "ID", selector: (row) => row?.id ?? row?._id, sortable: false },
     { name: "Title", selector: (row) => row?.title },
-     { name: "Author", selector: (row) => row?.post_by_name},
+     
+
+      { name: "Author", 
+     
+            cell: (row) => (
+                   <Link to={`/astrologer/${row.post_by}/view`}>
+                     { row?.post_by_name}
+                   </Link>
+                 )
+           
+            },
 
     { name: "Created At", selector: (row) => formatDateTime(row?.created_date) },
 

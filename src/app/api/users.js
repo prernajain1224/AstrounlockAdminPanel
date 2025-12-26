@@ -1,4 +1,4 @@
-import { returnOrThrow, patchWrapper, getWrapper, USERS } from './util';
+import { returnOrThrow, patchWrapper, getWrapper, USERS ,ADMIN_ADDRESS} from './util';
 
 export const usersList = async () => {
   const resJSON = await getWrapper(USERS);
@@ -23,3 +23,9 @@ export const userUpdate = async (data) => {
   const result = await returnOrThrow(resJSON);
   return result;
 };
+
+export const adminUserAddresses = async (id) => {
+  const resJSON = await getWrapper(`${ADMIN_ADDRESS}/${id}/`);
+  const result = await returnOrThrow(resJSON);
+  return result;
+}

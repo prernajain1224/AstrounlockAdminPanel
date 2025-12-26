@@ -89,6 +89,7 @@ const CategorieDetails = () => {
                           <th width="25%">Category Name</th>
                           <th width="15%">Price</th>
                           <th width="20%">Product Type</th>
+                          <th width="20%">Banner</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -109,8 +110,31 @@ const CategorieDetails = () => {
                               )}
                             </td>
                             <td>{product.category_name}</td>
-                            <td>{formatPrice(product.price)}</td>
-                            
+                            <td>  
+                              {product.product_type.toLowerCase() === "item"
+                                ? formatPrice(product.price)
+                                : product.product_type.toLowerCase() === "session"
+                                ? formatPrice(product.base_price)
+                                : "N/A"}
+                            </td>
+                            <td>
+                              {product.banner ? (
+                                <img
+                                  src={product.banner}
+                                  alt="Product Banner"
+                                  style={{
+                                    width: "80px",
+                                    height: "50px",
+                                    objectFit: "cover",
+                                    borderRadius: "4px",
+                                  }}
+                                />
+                              ) : (
+                                "Not Available"
+                              )}
+                            </td>
+
+                                                        
                             <td>{product.product_type}</td>
                           </tr>
                         ))}

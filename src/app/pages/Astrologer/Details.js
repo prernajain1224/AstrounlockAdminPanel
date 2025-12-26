@@ -202,6 +202,15 @@ const AstrologerDetails = () => {
                     {detailRow("Place of Birth", astrologerData?.data?.place_of_birth)}
                     {detailRow("About", astrologerData?.data?.about)}
                     {detailRow("Religion", astrologerData?.data?.religion)}
+                    {detailRow("Chat Price (per minute)", `₹ ${astrologerData?.data?.chat_price_min}`)}
+                    {detailRow("Experience", astrologerData?.data?.experience)}
+                    {detailRow(
+                      "Languages",
+                      astrologerData?.data?.languages?.length
+                        ? astrologerData.data.languages.join(", ")
+                        : "Not Available"
+                    )}
+
                     {detailRow("Avatar", astrologerData?.data?.avatar)}
                     {detailRow("Created At", formatDateTime(astrologerData?.data?.created_at))}
                     {detailRow("Bank Details", bankData?.data)}
